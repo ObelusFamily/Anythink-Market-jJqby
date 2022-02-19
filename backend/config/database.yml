@@ -1,21 +1,27 @@
 default: &default
   adapter: postgresql
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  encoding: unicode
   timeout: 5000
-  url: <%= ENV['DATABASE_URL'] %>
+
+local_db: &local
+  host: 'localhost'
+  username: <%= ENV.fetch('WILCO_DB_USER', 'wilco') %>
+  password: <%= ENV.fetch('WILCO_DB_PASS', 'wilco') %>
 
 development:
   <<: *default
-  encoding: unicode
+  <<: *local
   pool: 5
+  database: 'anythink'
 
 test:
   <<: *default
+  <<: *local
+  database: 'anythink_test'
 
 production:
   <<: *default
-  adapter: postgresql
-  encoding: unicode
   pool: 5
   prepared_statements: false
   advisory_locks: false
+  url: <%= ENV['DATABASE_URL'] %>
