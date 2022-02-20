@@ -10,7 +10,8 @@ end
 puts ''
 
 puts "Creating items:"
-users = User.all.to_a.sample(25)
+all_users = User.all.to_a
+users = all_users.sample(25)
 
 users.each do |user|
   5.times do
@@ -18,6 +19,16 @@ users.each do |user|
                  title: FFaker::Product.product_name,
                  description: FFaker::Lorem.paragraph,
                  slug: FFaker::Internet.unique.slug)
+    putc '.'
+  end
+end
+puts ''
+
+puts "Creating comments:"
+Item.all.sample(20).each do |item|
+  10.times do
+    commenter = all_users.sample
+    Comment.create!(user: commenter, item: item, body: FFaker::Lorem.paragraph)
     putc '.'
   end
 end
