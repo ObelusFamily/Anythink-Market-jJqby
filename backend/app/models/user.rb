@@ -13,10 +13,11 @@ class User < ApplicationRecord
   acts_as_follower
   acts_as_followable
 
-  validates :username, uniqueness: { case_sensitive: true },
-                       format: { with: /\A[a-zA-Z0-9]+\z/ },
-                       presence: true,
-                       allow_blank: false
+  validates :username,
+    uniqueness: { case_sensitive: true, message: 'not available' },
+    format: { with: /\A[._a-zA-Z0-9]+\z/, message: ->(user, data) { "only allows letters and digits. Got #{data[:value]}" } },
+    presence: true,
+    allow_blank: false
 
   def generate_jwt
     JWT.encode({ id: id,
