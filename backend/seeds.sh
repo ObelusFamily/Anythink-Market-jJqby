@@ -1,3 +1,3 @@
 #!/bin/sh
 
-rails db:seed
+bundle exec rake db:seed
