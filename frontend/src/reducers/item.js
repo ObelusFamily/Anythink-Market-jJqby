@@ -8,6 +8,15 @@ import {
 const reducer = (state = {}, action) => {
   switch (action.type) {
     case ITEM_PAGE_LOADED:
+      if (action.error) {
+        console.log(action.payload);
+        return state;
+      }
+
+      if (!action.payload[0].item.image) {
+        action.payload[0].item.image = "placeholder.png";
+      }
+
       return {
         ...state,
         item: action.payload[0].item,

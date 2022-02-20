@@ -12,7 +12,9 @@ Rails.application.routes.draw do
       resource :follow, only: %i[create destroy]
     end
 
-    resources :items, param: :slug, except: %i[edit new] do
+    resources :items, param: :slug,
+      constraints: { slug: /[A-Za-z0-9_.]+./ },
+      except: %i[edit new] do
       resource :favorite, only: %i[create destroy]
       resources :comments, only: %i[create index destroy]
       get :feed, on: :collection
